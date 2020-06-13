@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="shortcut icon" href="">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+	<%- include('partials/nav'); -%>
+	<h1>This is home</h1>
+	<form id="f1">
+		<input type="text" name="item">
+		<button type="submit">ADD</button>
+	</form>
+
+	<ul>
+		<% wish.forEach(item=>{ %>
+		<li onclick="deletethis(this)"><%= item %></li>
+		<% }) %>
+
+	</ul>
+
+	<script>
+		document.getElementById('f1').onsubmit = (e)=>{
+			e.preventDefault();
+			const url = 'http://localhost:5000/sent';
+			var data = new URLSearchParams();
+			
+			for(var pair of new FormData(e.target)){
+				data.append(pair[0],pair[1])
+			}
+
+			console.log(data)
+			fetch(url,{
+
+				method: 'post',
+				body: data,
+				
+			}).then(res=>res.json())
+			.then(res2=>console.log(res2));	
+		}
+
+	function deletethis(item){
+		fetch('http://localhost:5000/remove/'+item.innerText,{
+			method: 'delete',
+
+		}).then(res=>res.json())
+		.then(res2 => {
+			console.log(res2)
+			location.reload()
+		});
+	}
+
+	</script>
+
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	
+</body>
+</html>

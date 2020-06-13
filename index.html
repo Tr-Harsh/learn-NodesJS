@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+	<button id="b1">FETCH</button>
+	<script>
+		document.getElementById('b1').onclick = ()=>{
+			fetch('http://localhost:5000/home')
+			.then(res=>res.json())
+			.then(res2=>console.log(res2));
+		}
+		
+	</script>
+
+</body>
+</html>
